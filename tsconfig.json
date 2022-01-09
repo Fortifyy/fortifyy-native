@@ -1,6 +1,17 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "module": "ES6",
+    "target": "es5",
+    "strict": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "jsx": "react-native"
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
