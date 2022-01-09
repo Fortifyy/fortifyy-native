@@ -18,6 +18,8 @@ import {
 } from "@expo-google-fonts/roboto";
 import AppLoading from "expo-app-loading";
 import RootRouter from "./routes";
+import {Provider} from "react-redux";
+import store from "./redux/store/store";
 
 
 export default function App() {
@@ -38,14 +40,16 @@ export default function App() {
 
   useEffect(() => {
     httpService.client.get("")
-      .then((res) => console.log(res))
+      .then((res) => console.log(res.data))
       .catch((err) => console.log(err.status));
   }, []);
 
   if (!fontsLoaded) return <AppLoading />;
   return (
-    <NativeBaseProvider>
-      <RootRouter />
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider>
+        <RootRouter />
+      </NativeBaseProvider>
+    </Provider>
   );
 }

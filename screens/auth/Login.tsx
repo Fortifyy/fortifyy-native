@@ -1,14 +1,8 @@
 import React from "react";
 import {Box, Center, Hidden, Image, Stack, StatusBar, Text, VStack} from "native-base";
-import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "../../interface/navigation";
-import {SCREEN_NAMES} from "../../constants";
-import {SignInForm} from "../../components/SigninForm";
+import SignInForm from "../../components/SigninForm";
 
-interface Props extends NativeStackScreenProps<RootStackParamList, SCREEN_NAMES.Login> {
-}
-
-const SignIn: React.FC<Props> = ({navigation}) => {
+const SignIn = () => {
   return (
     <>
       <StatusBar
@@ -70,7 +64,7 @@ const SignIn: React.FC<Props> = ({navigation}) => {
               />
             </Center>
           </Hidden>
-          <SignInForm navigation={navigation} />
+          <SignInForm />
         </Stack>
       </Center>
     </>

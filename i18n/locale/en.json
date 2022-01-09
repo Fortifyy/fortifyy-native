@@ -32,7 +32,8 @@
     "loginWithPhone": "Log In with Mobile Number",
     "createNewAccount": "Don't have an Account? Sign up",
     "enterPhoneNum": "Enter your Mobile Number",
-    "selectSociety": "Select your Society"
+    "selectSociety": "Select your Society",
+    "verifying": "Verifying"
   },
   "validation": {
     "nameIsRequired": "Name is required.",
@@ -63,11 +64,11 @@
   },
   "error": {
     "somethingWrong": "Something went wrong",
-    "doYouWantToRestart": "Do you want to restart application",
+    "doYouWantToRestart": "Do you want to restart application?",
     "restart": "Restart",
-    "cancel": "Cancel",
     "socialLoginError": "Social login error",
-    "close": "Close"
+    "close": "Close",
+    "serverError": "Internal Server Error"
   },
   "profile": {
     "changePassword": {

@@ -1,6 +1,6 @@
 // noinspection DuplicatedCode
 
-import React from "react";
+import React, {useEffect} from "react";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {
   Button,
@@ -14,44 +14,80 @@ import {
   Input,
   Link,
   Text,
+  useToast,
   VStack,
   WarningOutlineIcon,
 } from "native-base";
-import {FormikHelpers, useFormik} from "formik";
+import {useFormik} from "formik";
 import {signInValidationRules} from "../validators/auth";
 import $t from "../i18n";
 import {Entypo} from "@expo/vector-icons";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../interface/navigation";
 import {SCREEN_NAMES} from "../constants";
+import {useNavigation} from "@react-navigation/native";
+import {useDispatch, useSelector} from "react-redux";
+import {loginUserRequest} from "../redux/actions/userActions";
+import {LoginFormValues} from "../interface/userDataInterface";
+import {getErrorSelector, getPendingSelector} from "../redux/selectors/userSelector";
+import {t} from "i18n-js";
 
-// Shape of form values
-interface FormValues {
-  email: string | undefined;
-  password: string | undefined;
-}
-
-interface SignInFormProps {
-  navigation: NativeStackNavigationProp<RootStackParamList, SCREEN_NAMES.Login>;
-}
-
-const initialValues: FormValues = {
+const initialValues: LoginFormValues = {
   email: "",
   password: "",
 };
 
-export const SignInForm: React.FC<SignInFormProps> = ({navigation}) => {
+const SignInForm = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, SCREEN_NAMES.Login>>();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const pending = useSelector(getPendingSelector);
+  const error = useSelector(getErrorSelector);
+
+  const [showPass, setShowPass] = React.useState(false);
+
+  useEffect(() => {
+    if (error.login) {
+      let toastData;
+      switch (error.login) {
+        case 404:
+          toastData = {
+            title: t("auth.emailDoesNotExist"),
+            status: "error",
+          };
+          break;
+        case 406:
+          toastData = {
+            title: t("auth.invalidCredentials"),
+            status: "error",
+          };
+          break;
+        default:
+          toastData = {
+            title: t("error.serverError"),
+            status: "error",
+          };
+      }
+      toast.show({
+        title: toastData.title,
+        status: toastData.status,
+      });
+    }
+  }, [error.login]);
+
+  //Formik Init
   const formik = useFormik({
     initialErrors: undefined,
     initialTouched: {email: false, password: false},
     initialValues,
-    onSubmit(values: FormValues, formikHelpers: FormikHelpers<FormValues>): void | Promise<any> {
-      console.log("onSubmit SignUp", values, formikHelpers);
-      return undefined;
+    onSubmit(values: LoginFormValues): void | Promise<any> {
+      console.log("onSubmit SignUp", values);
+      dispatch(loginUserRequest(values));
     },
     validationSchema: signInValidationRules,
   });
-  const [showPass, setShowPass] = React.useState(false);
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
@@ -197,6 +233,8 @@ export const SignInForm: React.FC<SignInFormProps> = ({navigation}) => {
                 _dark={{
                   bg: "primary.700",
                 }}
+                isLoading={pending.login}
+                isLoadingText={t("auth.verifying")}
                 onPress={() => formik.handleSubmit()}
               >
                 SIGN IN
