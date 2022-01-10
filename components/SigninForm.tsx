@@ -1,6 +1,6 @@
 // noinspection DuplicatedCode
 
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {
   Button,
@@ -25,7 +25,7 @@ import {Entypo} from "@expo/vector-icons";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../interface/navigation";
 import {SCREEN_NAMES} from "../constants";
-import {useNavigation} from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUserRequest} from "../redux/actions/userActions";
 import {LoginFormValues} from "../interface/userDataInterface";
@@ -47,6 +47,13 @@ const SignInForm = () => {
 
   const [showPass, setShowPass] = React.useState(false);
 
+  useFocusEffect(useCallback(() => {
+    return () => {
+      formik.handleReset(initialValues);
+    };
+  }, []));
+
+  /*Server Side Error Handling*/
   useEffect(() => {
     if (error.login) {
       let toastData;
@@ -216,7 +223,7 @@ const SignInForm = () => {
                   _light={{color: "coolGray.800"}}
                   _dark={{color: "coolGray.400"}}
                 >
-                  Remember me and keep me logged in
+                  {$t("auth.RememberMe")}
                 </Text>
               </Checkbox>
               <Button

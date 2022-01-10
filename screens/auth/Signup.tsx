@@ -1,15 +1,8 @@
 import React from "react";
 import {Box, Center, Hidden, Image, Stack, StatusBar, Text, VStack} from "native-base";
-import {SCREEN_NAMES} from "../../constants";
-import {RootStackParamList} from "../../interface/navigation";
-import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {SignUpForm} from "../../components/SignUpForm";
+import SignUpForm from "../../components/SignUpForm";
 
-
-interface Props extends NativeStackScreenProps<RootStackParamList, SCREEN_NAMES.Login> {
-}
-
-const SignUp: React.FC<Props> = ({navigation}) => {
+const SignUp = () => {
   return (
     <>
       <StatusBar
@@ -69,7 +62,7 @@ const SignUp: React.FC<Props> = ({navigation}) => {
               />
             </Center>
           </Hidden>
-          <SignUpForm navigation={navigation} />
+          <SignUpForm />
         </Stack>
       </Center>
     </>

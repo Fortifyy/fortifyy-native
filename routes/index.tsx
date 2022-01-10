@@ -26,7 +26,7 @@ import {
   Roboto_900Black_Italic,
   useFonts,
 } from "@expo-google-fonts/roboto";
-import {checkCurrentUser} from "../redux/actions/userActions";
+import {checkCurrentUser, checkCurrentUserStarted} from "../redux/actions/userActions";
 import AuthService from "../services/AuthService";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,11 +52,11 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
+      dispatch(checkCurrentUserStarted());
       await AuthService.init();
       dispatch(checkCurrentUser());
     })();
   }, []);
-
   if (!fontsLoaded && pending.currentUser) return <AppLoading />;
 
   return (

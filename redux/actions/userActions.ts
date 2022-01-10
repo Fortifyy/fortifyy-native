@@ -1,32 +1,30 @@
 import {
+  AuthSuccessInterface,
   CheckCurrentUserFailureInterface,
   CheckCurrentUserInterface,
   CheckCurrentUserStartedInterface,
-  CheckCurrentUserSuccessInterface,
   CreateSignUpFailureInterface,
+  CreateUserPendingInterface,
   CreateUserRequestInterface,
-  CreateUserSuccessInterface,
   LoginFormValues,
   LoginUserFailureInterface,
   LoginUserPendingInterface,
   LoginUserRequestInterface,
-  LoginUserSuccessInterface,
   UserData,
 } from "../../interface/userDataInterface";
 import {UserActionsTypes} from "../../constants";
 
 /* SIGNUP */
 
-export const createUserRequest = (data: any): CreateUserRequestInterface => ({
+export const createUserRequest = (data: LoginFormValues): CreateUserRequestInterface => ({
   type: UserActionsTypes.InitiateSignUp,
   payload: data,
 });
-
-export const createUserSuccess = (data: any): CreateUserSuccessInterface => ({
-  type: UserActionsTypes.SignUpSuccess,
-  payload: data,
+export const createUserStarted = (): CreateUserPendingInterface => ({
+  type: UserActionsTypes.SignupPending,
 });
-export const createSignUpFailure = (data: any): CreateSignUpFailureInterface => ({
+
+export const createSignUpFailure = (data: string): CreateSignUpFailureInterface => ({
   type: UserActionsTypes.SignUpFailure,
   payload: data,
 });
@@ -39,32 +37,34 @@ export const loginUserRequest = (data: LoginFormValues): LoginUserRequestInterfa
   payload: data,
 });
 
-export const LoginUserStarted = (): LoginUserPendingInterface => ({
+export const loginUserStarted = (): LoginUserPendingInterface => ({
   type: UserActionsTypes.LoginPending,
 });
 
-export const loginUserSuccess = (data: UserData): LoginUserSuccessInterface => ({
-  type: UserActionsTypes.LoginSuccess,
-  payload: data,
-});
 
 export const loginUserFailure = (data: number): LoginUserFailureInterface => ({
   type: UserActionsTypes.LoginFailure,
   payload: data,
 });
 
+
 /*  CURRENT USER  */
 
 export const checkCurrentUser = (): CheckCurrentUserInterface => ({
   type: UserActionsTypes.CheckCurrentUser,
 });
+
 export const checkCurrentUserStarted = (): CheckCurrentUserStartedInterface => ({
   type: UserActionsTypes.CheckCurrentUserStarted,
 });
-export const checkCurrentUserSuccess = (payload: UserData): CheckCurrentUserSuccessInterface => ({
-  type: UserActionsTypes.CheckCurrentUserSuccess,
-  payload,
-});
+
 export const checkCurrentUserFailure = (): CheckCurrentUserFailureInterface => ({
   type: UserActionsTypes.CheckCurrentUserFailure,
+});
+
+/* AUTH COMMON */
+
+export const authSuccess = (data: UserData): AuthSuccessInterface => ({
+  type: UserActionsTypes.AuthSuccess,
+  payload: data,
 });

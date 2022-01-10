@@ -10,8 +10,8 @@ export interface LoginSuccessResponse {
 
 export interface LoginFailureResponse {
   error?: string,
-  message: string,
-  statusCode: 404 | 406
+  message: string | string[],
+  statusCode: 404 | 406 | 400
 }
 
 export interface UnAuthorizedFailureResponse {

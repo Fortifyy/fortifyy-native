@@ -17,6 +17,23 @@ const initialState = {
 
 const userReducer: Reducer<UserState, UserActions> = (state = initialState, action) => {
   switch (action.type) {
+    /* Signup Reducers */
+    case UserActionsTypes.SignupPending:
+      return {
+        ...initialState,
+        pending: {
+          ...initialState.pending,
+          signup: true,
+        },
+      };
+    case UserActionsTypes.SignUpFailure:
+      return {
+        ...initialState,
+        error: {
+          ...initialState.error,
+          signup: action.payload,
+        },
+      };
     /* Login Reducers */
     case UserActionsTypes.LoginPending:
       return {
@@ -34,7 +51,7 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
           login: action.payload,
         },
       };
-    case UserActionsTypes.LoginSuccess:
+    case UserActionsTypes.AuthSuccess:
       return {
         ...initialState,
         user: action.payload,
@@ -42,16 +59,11 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
     /*Current User Reducers*/
     case UserActionsTypes.CheckCurrentUserStarted:
       return {
-        ...initialState,
+        ...state,
         pending: {
           ...initialState.pending,
           currentUser: true,
         },
-      };
-    case UserActionsTypes.CheckCurrentUserSuccess:
-      return {
-        ...initialState,
-        user: action.payload
       };
     case UserActionsTypes.CheckCurrentUserFailure:
       return {...initialState};

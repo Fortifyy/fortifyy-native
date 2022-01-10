@@ -8,6 +8,7 @@ import {AxiosResponse} from "axios";
 
 
 class AuthService extends ApiService {
+  /*Constructor and Init*/
   constructor() {
     super();
     this.init().then(() => console.log("Auth Service Initialized"));
@@ -21,6 +22,18 @@ class AuthService extends ApiService {
       await this.setAuthorizationHeader();
       this.api.setUnauthorizedCallback(this.destroySession.bind(this));
     }
+  };
+
+  /*Helper Functions*/
+
+  getToken = async (): Promise<string | undefined> => {
+    const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
+    return user ? JSON.parse(user).token : undefined;
+  };
+
+  getUser = async () => {
+    const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
+    return user ? JSON.parse(user) : undefined;
   };
 
   setAuthorizationHeader = async () => {
@@ -48,6 +61,8 @@ class AuthService extends ApiService {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.UserToken); //todo add keys of asyncStorage -> Expo Token for device Notifications
     this.api.removeHeaders(["Authorization"]);
   };
+
+  /* API Handlers */
 
   login = (loginData: LoginFormValues): Promise<AxiosResponse<LoginSuccessResponse | LoginFailureResponse>> => {
     return this.apiClient.post(API_ROUTES.auth.LoginWithEmail, loginData).then(async (res) => {
@@ -78,35 +93,19 @@ class AuthService extends ApiService {
       });
   };
 
+  signup = (signupData: LoginFormValues) => {
+    return this.apiClient.post(API_ROUTES.auth.SignUpWithEmail, signupData)
+      .then(() => {
+        return this.login(signupData);
+      })
+      .catch((reason) => {
+        return reason.data;
+      });
+  };
   /*  forgotPassword = data => this.apiClient.post(api.auth.FORGOT_PASSWORD, data);
 
     resetPassword = data => this.apiClient.post(api.auth.RESET_PASSWORD, data);*/
 
-  /*  signup = signupData => {
-      return this.apiClient
-        .post(api.auth.SIGN_UP, signupData)
-        .then(response => {
-          console.log("[[AuthService]] - signup - ", signupData, response);
-          const {email, password} = signupData;
-          return this.login({email, password});
-        })
-        .catch((error) => {
-          return {
-            data: error.response.data,
-            status: error.response.status,
-          };
-        });
-    };*/
-
-  getToken = async (): Promise<string | undefined> => {
-    const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
-    return user ? JSON.parse(user).token : undefined;
-  };
-
-  getUser = async () => {
-    const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
-    return user ? JSON.parse(user) : undefined;
-  };
 
   /*  updateUserInStorage = async property => {
       const user = await AsyncStorage.getItem("user");

@@ -1,6 +1,6 @@
 // noinspection DuplicatedCode
 
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {
   Button,
   Checkbox,
@@ -13,6 +13,7 @@ import {
   Input,
   Link,
   Text,
+  useToast,
   VStack,
   WarningOutlineIcon,
 } from "native-base";
@@ -20,24 +21,25 @@ import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../interface/navigation";
 import {SCREEN_NAMES} from "../constants";
-import {FormikHelpers, useFormik} from "formik";
+import {useFormik} from "formik";
 import {signUpValidationRules} from "../validators/auth";
 import $t from "../i18n";
 import {Entypo} from "@expo/vector-icons";
-import {useFocusEffect} from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
+import {useDispatch, useSelector} from "react-redux";
+import {getErrorSelector, getPendingSelector} from "../redux/selectors/userSelector";
+import {createUserRequest} from "../redux/actions/userActions";
+import {t} from "i18n-js";
+import {LoginFormValues} from "../interface/userDataInterface";
 
 // Shape of form values
-interface FormValues {
-  email: string | undefined;
-  password: string | undefined;
-  confirmPassword: string | undefined;
+interface SignUpFormValues {
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
-interface SignUpFormProps {
-  navigation: NativeStackNavigationProp<RootStackParamList, SCREEN_NAMES.SignUp>;
-}
-
-const initialValues: FormValues = {
+const initialValues: SignUpFormValues = {
   email: "",
   password: "",
   confirmPassword: "",
@@ -49,19 +51,38 @@ const initialTouched = {
   confirmPassword: false,
 };
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({navigation}) => {
+const SignUpForm = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, SCREEN_NAMES.SignUp>>();
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const error = useSelector(getErrorSelector);
+  const pending = useSelector(getPendingSelector);
+  const [showPass, setShowPass] = React.useState(false);
+  const [showConfirmPass, setShowConfirmPass] = React.useState(false);
 
   const formik = useFormik({
     initialErrors: undefined,
     initialTouched,
     initialValues,
-    onSubmit(values: FormValues, formikHelpers: FormikHelpers<FormValues>): void | Promise<any> {
-      formikHelpers.resetForm();
-      console.log("formik onSubmitSignup", values);
-      return undefined;
+    onSubmit(values: SignUpFormValues): void | Promise<any> {
+      let formValues: LoginFormValues = {
+        email: values.email,
+        password: values.password,
+      };
+      dispatch(createUserRequest(formValues));
+
     },
     validationSchema: signUpValidationRules,
   });
+  /*Server Side Error Handling*/
+  useEffect(() => {
+    if (error.signup) {
+      toast.show({
+        title: error.signup,
+        status: "error",
+      });
+    }
+  }, [error.signup]);
 
   useFocusEffect(useCallback(() => {
     return () => {
@@ -69,8 +90,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({navigation}) => {
     };
   }, []));
 
-  const [showPass, setShowPass] = React.useState(false);
-  const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
@@ -270,6 +289,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({navigation}) => {
                 _dark={{
                   bg: "primary.700",
                 }}
+                isLoading={pending.signup}
+                isLoadingText={t("auth.verifying")}
                 onPress={() => formik.handleSubmit()}
               >
                 SIGN UP

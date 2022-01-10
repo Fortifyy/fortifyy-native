@@ -4,18 +4,31 @@ import {CreateUserRequestInterface, LoginUserRequestInterface, UserData} from ".
 import AuthService from "../../services/AuthService";
 import {LoginResponse, UnAuthorizedFailureResponse} from "../../interface/AuthService";
 import * as UserActions from "../actions/userActions";
+import {t} from "i18n-js";
 
 /* Helpers */
+
 function* createUser(action: CreateUserRequestInterface) {
-  console.log("test", action);
+  yield put(UserActions.createUserStarted());
+  try {
+    const response: LoginResponse = yield call(AuthService.signup, action.payload);
+    if (response.statusCode === 202) {
+      yield put(UserActions.authSuccess(response.data.user));
+    } else {
+      let message = Array.isArray(response.message) ? response.message[0] : response.message;
+      yield put(UserActions.createSignUpFailure(message));
+    }
+  } catch (e) {
+    yield put(UserActions.createSignUpFailure(t("error.serverError")));
+  }
 }
 
 function* loginUser({payload}: LoginUserRequestInterface) {
-  yield put(UserActions.LoginUserStarted());
+  yield put(UserActions.loginUserStarted());
   try {
     const response: LoginResponse = yield call(AuthService.login, payload);
     if (response.statusCode === 202) {
-      yield put(UserActions.loginUserSuccess(response.data.user));
+      yield put(UserActions.authSuccess(response.data.user));
     } else {
       yield put(UserActions.loginUserFailure(response.statusCode));
     }
@@ -28,7 +41,7 @@ function* checkUser() {
   yield put(UserActions.checkCurrentUserStarted());
   try {
     const res: UserData | UnAuthorizedFailureResponse = yield call(AuthService.currentUser);
-    if (!("statusCode" in res)) yield put(UserActions.checkCurrentUserSuccess(res));
+    if (!("statusCode" in res)) yield put(UserActions.authSuccess(res));
     else
       yield put(UserActions.checkCurrentUserFailure());
   } catch (e) {

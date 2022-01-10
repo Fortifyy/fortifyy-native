@@ -33,7 +33,8 @@
     "createNewAccount": "Don't have an Account? Sign up",
     "enterPhoneNum": "Enter your Mobile Number",
     "selectSociety": "Select your Society",
-    "verifying": "Verifying"
+    "verifying": "Verifying",
+    "RememberMe": "Remember me and keep me logged in"
   },
   "validation": {
     "nameIsRequired": "Name is required.",
