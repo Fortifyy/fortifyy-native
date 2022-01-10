@@ -6,6 +6,7 @@ const initialState = {
   pending: {
     login: false,
     signup: false,
+    currentUser: false,
   },
   user: undefined,
   error: {
@@ -16,6 +17,7 @@ const initialState = {
 
 const userReducer: Reducer<UserState, UserActions> = (state = initialState, action) => {
   switch (action.type) {
+    /* Login Reducers */
     case UserActionsTypes.LoginPending:
       return {
         ...initialState,
@@ -33,11 +35,27 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
         },
       };
     case UserActionsTypes.LoginSuccess:
-      console.log("LoginSuccess Reducer", action.payload);
       return {
         ...initialState,
         user: action.payload,
       };
+    /*Current User Reducers*/
+    case UserActionsTypes.CheckCurrentUserStarted:
+      return {
+        ...initialState,
+        pending: {
+          ...initialState.pending,
+          currentUser: true,
+        },
+      };
+    case UserActionsTypes.CheckCurrentUserSuccess:
+      return {
+        ...initialState,
+        user: action.payload
+      };
+    case UserActionsTypes.CheckCurrentUserFailure:
+      return {...initialState};
+    /* Default Case*/
     default:
       return {
         ...state,

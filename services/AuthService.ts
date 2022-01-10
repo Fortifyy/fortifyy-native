@@ -33,8 +33,7 @@ class AuthService extends ApiService {
   };
 
   createSession = async (user: any) => {
-    console.log("[[createSession]]", user);
-    // await SecureStore.setItemAsync(SECURE_STORE_KEYS.UserToken, JSON.stringify(user));
+    await SecureStore.setItemAsync(SECURE_STORE_KEYS.UserToken, JSON.stringify(user));
     await this.setAuthorizationHeader();
     //todo Notification Service
     // const expoPushToken = await askForNotificationsPermission();
@@ -47,12 +46,12 @@ class AuthService extends ApiService {
 
   destroySession = async () => {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.UserToken); //todo add keys of asyncStorage -> Expo Token for device Notifications
-    this.api.removeHeaders([]);
+    this.api.removeHeaders(["Authorization"]);
   };
 
   login = (loginData: LoginFormValues): Promise<AxiosResponse<LoginSuccessResponse | LoginFailureResponse>> => {
-    return this.apiClient.post(API_ROUTES.auth.LoginWithEmail, loginData).then((res) => {
-      // this.createSession({userId: res.data.userId, token: res.data.token});
+    return this.apiClient.post(API_ROUTES.auth.LoginWithEmail, loginData).then(async (res) => {
+      await this.createSession({userId: res.data.user.id, token: res.data.token});
       return res;
     }).catch((error) => {
       console.log("[[Auth Service]] - Login : Error", error.data);
@@ -63,6 +62,20 @@ class AuthService extends ApiService {
   logout = async () => {
     await this.destroySession();
     return "Logout";
+  };
+
+  currentUser = () => {
+    return this.apiClient.get(API_ROUTES.auth.CurrentUser)
+      .then((res) => {
+        return {
+          id: res.data.userId,
+          email: res.data.email,
+          userType: res.data.userType,
+        };
+      })
+      .catch((reason) => {
+        return reason.data;
+      });
   };
 
   /*  forgotPassword = data => this.apiClient.post(api.auth.FORGOT_PASSWORD, data);
@@ -85,7 +98,7 @@ class AuthService extends ApiService {
         });
     };*/
 
-  getToken = async () => {
+  getToken = async (): Promise<string | undefined> => {
     const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
     return user ? JSON.parse(user).token : undefined;
   };

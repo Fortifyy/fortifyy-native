@@ -14,22 +14,14 @@ export interface UserData {
 export interface UserState {
   pending: {
     login: boolean,
-    signup: boolean
+    signup: boolean,
+    currentUser: boolean
   },
   user: UserData | undefined,
   error: {
     login: number | null,
     signup: number | null
   },
-}
-
-export interface FetchUserSuccessPayload {
-  token: string,
-  user: UserData
-}
-
-export interface FetchUserFailurePayload {
-  error: string;
 }
 
 export interface CreateUserRequestInterface {
@@ -46,6 +38,8 @@ export interface CreateSignUpFailureInterface {
   type: UserActionsTypes.SignUpFailure,
   payload: any
 }
+
+/* LOGIN ACTIONS INTERFACE */
 
 export interface LoginUserRequestInterface {
   type: UserActionsTypes.InitiateLogin,
@@ -66,11 +60,37 @@ export interface LoginUserFailureInterface {
   payload: number
 }
 
+/* CURRENT USER ACTIONS INTERFACE */
+
+export interface CheckCurrentUserInterface {
+  type: UserActionsTypes.CheckCurrentUser;
+}
+
+export interface CheckCurrentUserStartedInterface {
+  type: UserActionsTypes.CheckCurrentUserStarted;
+}
+
+export interface CheckCurrentUserSuccessInterface {
+  type: UserActionsTypes.CheckCurrentUserSuccess;
+  payload: UserData;
+}
+
+export interface CheckCurrentUserFailureInterface {
+  type: UserActionsTypes.CheckCurrentUserFailure;
+}
+
 export type UserActions =
+//Signup
   | CreateSignUpFailureInterface
   | CreateUserSuccessInterface
   | CreateUserRequestInterface
+  //Login
   | LoginUserRequestInterface
   | LoginUserFailureInterface
   | LoginUserSuccessInterface
   | LoginUserPendingInterface
+  //CurrentUser
+  | CheckCurrentUserStartedInterface
+  | CheckCurrentUserInterface
+  | CheckCurrentUserSuccessInterface
+  | CheckCurrentUserFailureInterface

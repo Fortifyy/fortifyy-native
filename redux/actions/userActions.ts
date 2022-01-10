@@ -1,4 +1,8 @@
 import {
+  CheckCurrentUserFailureInterface,
+  CheckCurrentUserInterface,
+  CheckCurrentUserStartedInterface,
+  CheckCurrentUserSuccessInterface,
   CreateSignUpFailureInterface,
   CreateUserRequestInterface,
   CreateUserSuccessInterface,
@@ -47,4 +51,20 @@ export const loginUserSuccess = (data: UserData): LoginUserSuccessInterface => (
 export const loginUserFailure = (data: number): LoginUserFailureInterface => ({
   type: UserActionsTypes.LoginFailure,
   payload: data,
+});
+
+/*  CURRENT USER  */
+
+export const checkCurrentUser = (): CheckCurrentUserInterface => ({
+  type: UserActionsTypes.CheckCurrentUser,
+});
+export const checkCurrentUserStarted = (): CheckCurrentUserStartedInterface => ({
+  type: UserActionsTypes.CheckCurrentUserStarted,
+});
+export const checkCurrentUserSuccess = (payload: UserData): CheckCurrentUserSuccessInterface => ({
+  type: UserActionsTypes.CheckCurrentUserSuccess,
+  payload,
+});
+export const checkCurrentUserFailure = (): CheckCurrentUserFailureInterface => ({
+  type: UserActionsTypes.CheckCurrentUserFailure,
 });

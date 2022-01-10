@@ -82,7 +82,6 @@ const SignInForm = () => {
     initialTouched: {email: false, password: false},
     initialValues,
     onSubmit(values: LoginFormValues): void | Promise<any> {
-      console.log("onSubmit SignUp", values);
       dispatch(loginUserRequest(values));
     },
     validationSchema: signInValidationRules,
