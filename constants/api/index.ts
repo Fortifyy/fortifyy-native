@@ -6,4 +6,7 @@ export const API_ROUTES = {
     LoginWithEmail: "auth/signin/with-email",
     CurrentUser: "auth/current-user",
   },
+  activity: {
+    getAll: "activities/all",
+  },
 };

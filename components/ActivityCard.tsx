@@ -9,6 +9,7 @@ import {Linking} from "react-native";
 interface Props {
   cardData: UserActivityInterface;
 }
+
 /*todo
 *  Text Colors
 *  Photos

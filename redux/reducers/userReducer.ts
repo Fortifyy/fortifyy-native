@@ -1,4 +1,4 @@
-import {UserActionsTypes} from "../../constants";
+import {USER_ACTION_TYPES} from "../../constants";
 import {UserActions, UserState} from "../../interface/userDataInterface";
 import {Reducer} from "redux";
 
@@ -18,7 +18,7 @@ const initialState = {
 const userReducer: Reducer<UserState, UserActions> = (state = initialState, action) => {
   switch (action.type) {
     /* Signup Reducers */
-    case UserActionsTypes.SignupPending:
+    case USER_ACTION_TYPES.SignupPending:
       return {
         ...initialState,
         pending: {
@@ -26,7 +26,7 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
           signup: true,
         },
       };
-    case UserActionsTypes.SignUpFailure:
+    case USER_ACTION_TYPES.SignUpFailure:
       return {
         ...initialState,
         error: {
@@ -35,7 +35,7 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
         },
       };
     /* Login Reducers */
-    case UserActionsTypes.LoginPending:
+    case USER_ACTION_TYPES.LoginPending:
       return {
         ...initialState,
         pending: {
@@ -43,7 +43,7 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
           login: true,
         },
       };
-    case UserActionsTypes.LoginFailure:
+    case USER_ACTION_TYPES.LoginFailure:
       return {
         ...initialState,
         error: {
@@ -51,13 +51,13 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
           login: action.payload,
         },
       };
-    case UserActionsTypes.AuthSuccess:
+    case USER_ACTION_TYPES.AuthSuccess:
       return {
         ...initialState,
         user: action.payload,
       };
     /*Current User Reducers*/
-    case UserActionsTypes.CheckCurrentUserStarted:
+    case USER_ACTION_TYPES.CheckCurrentUserStarted:
       return {
         ...state,
         pending: {
@@ -65,7 +65,7 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
           currentUser: true,
         },
       };
-    case UserActionsTypes.CheckCurrentUserFailure:
+    case USER_ACTION_TYPES.CheckCurrentUserFailure:
       return {...initialState};
     /* Default Case*/
     default:

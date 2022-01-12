@@ -1,27 +1,49 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
-import DummyActivities from "../../exclude/data/dummyActivities.json";
 import ActivityCard from "../../components/ActivityCard";
-import {UserActivityInterface} from "../../interface/activityInterface";
-import {sanitizeUserActivityPayload} from "../../functions/sanitizePayload";
-import {Box} from "native-base";
+import {Box, Spinner, useToast} from "native-base";
 import EmptyComponent from "../../components/EmptyComponent";
 import {VirtualizedList} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserActivities} from "../../redux/actions/activityActions";
+import {
+  getActivityDataSelector,
+  getActivityErrorSelector,
+  getActivityLoadingSelector,
+} from "../../redux/selectors/activitySelector";
+import {UserActivityInterface} from "../../interface/activityInterface";
 
-const getItem = (activityData: [UserActivityInterface], index: number) => {
-  const activities = sanitizeUserActivityPayload(activityData);
-  return activities[index];
-};
 
 const Activities = () => {
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const activityData = useSelector(getActivityDataSelector);
+  const activityError = useSelector(getActivityErrorSelector);
+  const activityLoading = useSelector(getActivityLoadingSelector);
+
+  useEffect(() => {
+    dispatch(getUserActivities());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (activityError)
+      toast.show({
+        title: activityError,
+        status: "warning",
+      });
+  }, [activityError]);
+
+  if (activityLoading)
+    return <Spinner size={"lg"} color={"indigo.500"} />;
+
   return (
     <SafeAreaView>
       <StatusBar style="auto" animated={true} translucent={true} />
       <VirtualizedList
         renderItem={({item}) => <ActivityCard cardData={item} />}
-        data={DummyActivities}
-        getItem={getItem}
+        data={activityData}
+        getItem={(activityData: [UserActivityInterface], index: number) => activityData[index]}
         getItemCount={(data) => data.length}
         keyExtractor={(item) => item._id}// @ts-ignore
         ItemSeparatorComponent={() => <Box my={1} />}

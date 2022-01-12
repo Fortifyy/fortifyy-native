@@ -9,7 +9,7 @@ export enum SCREEN_NAMES {
   HomeTab = "HomeTab"
 }
 
-export enum UserActionsTypes {
+export enum USER_ACTION_TYPES {
   GetCurrentUser = "GET_CURRENT_USER",
   InitiateSignUp = "INITIATE_USER_SIGNUP",
   SignupPending = "SIGNUP_PENDING",
@@ -22,6 +22,13 @@ export enum UserActionsTypes {
   CheckCurrentUser = "CHECK_CURRENT_USER",
   CheckCurrentUserFailure = "CHECK_CURRENT_USER_FAILURE",
   Logout = "LOGOUT",
+}
+
+export enum ACTIVITY_ACTION_TYPES {
+  GetUserActivities = "GET_USER_ACTIVITIES",
+  GetUserActivitiesPending = "GET_USER_ACTIVITIES_PENDING",
+  GetUserActivitiesSuccess = "GET_USER_ACTIVITIES_SUCCESS",
+  GetUserActivitiesFailure = "GET_USER_ACTIVITIES_FAILURE",
 }
 
 export const SECURE_STORE_KEYS = {
@@ -47,10 +54,10 @@ export enum ACTIVITY_STATUS {
 }
 
 export enum WORKER_TYPES {
-    Maid = 'Maid',
-    Milkman = 'Milkman',
-    Laundry = 'Laundry',
-    Tuition = 'Tuition',
-    CarCleaner = 'Car-Cleaner',
-    Driver = 'Driver',
+  Maid = "Maid",
+  Milkman = "Milkman",
+  Laundry = "Laundry",
+  Tuition = "Tuition",
+  CarCleaner = "Car-Cleaner",
+  Driver = "Driver",
 }

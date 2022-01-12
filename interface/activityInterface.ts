@@ -1,4 +1,4 @@
-import {ACTIVITY_STATUS, ACTIVITY_TYPES, WORKER_TYPES} from "../constants";
+import {ACTIVITY_ACTION_TYPES, ACTIVITY_STATUS, ACTIVITY_TYPES, WORKER_TYPES} from "../constants";
 
 
 export interface UserActivityInterface {
@@ -7,7 +7,7 @@ export interface UserActivityInterface {
   allowedBy?: [{
     _id: string,
     name: string
-  }] |undefined,
+  }] | undefined,
   dailyHelp?: {
     _id: string,
     photo?: any,
@@ -28,3 +28,33 @@ export interface UserActivityInterface {
   } | undefined,
   reason?: string | undefined,
 }
+
+export interface ActivityState {
+  activities: [UserActivityInterface] | any[],
+  loading: boolean,
+  error: string | undefined
+}
+
+export interface getUserActivitiesInterface {
+  type: ACTIVITY_ACTION_TYPES.GetUserActivities;
+}
+
+export interface getUserActivitiesPendingInterface {
+  type: ACTIVITY_ACTION_TYPES.GetUserActivitiesPending;
+}
+
+//todo change any
+export interface getUserActivitiesSuccessInterface {
+  type: ACTIVITY_ACTION_TYPES.GetUserActivitiesSuccess;
+  payload: [UserActivityInterface] | [];
+}
+
+export interface getUserActivitiesFailureInterface {
+  type: ACTIVITY_ACTION_TYPES.GetUserActivitiesFailure;
+  payload: string | undefined;
+}
+
+export type ActivityActions =
+  | getUserActivitiesPendingInterface
+  | getUserActivitiesSuccessInterface
+  | getUserActivitiesFailureInterface

@@ -9,7 +9,6 @@
     "select": "Select One"
   },
   "auth": {
-    "offline": "Please check your Internet connection",
     "signUp": "Sign up",
     "signIn": "Sign in",
     "enterName": "Enter your name",
@@ -64,12 +63,14 @@
     }
   },
   "error": {
+    "offline": "Please check your Internet connection",
     "somethingWrong": "Something went wrong",
     "doYouWantToRestart": "Do you want to restart application?",
     "restart": "Restart",
     "socialLoginError": "Social login error",
     "close": "Close",
-    "serverError": "Internal Server Error"
+    "serverError": "Internal Server Error",
+    "unauthorized": "Authorization Error"
   },
   "profile": {
     "changePassword": {

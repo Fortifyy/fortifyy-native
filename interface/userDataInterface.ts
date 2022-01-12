@@ -1,4 +1,4 @@
-import {UserActionsTypes} from "../constants";
+import {USER_ACTION_TYPES} from "../constants";
 
 export interface LoginFormValues {
   email: string;
@@ -27,53 +27,53 @@ export interface UserState {
 /* Signup Action Interface */
 
 export interface CreateUserRequestInterface {
-  type: UserActionsTypes.InitiateSignUp,
+  type: USER_ACTION_TYPES.InitiateSignUp,
   payload: LoginFormValues
 }
 
 export interface CreateUserPendingInterface {
-  type: UserActionsTypes.SignupPending,
+  type: USER_ACTION_TYPES.SignupPending,
 }
 
 export interface CreateSignUpFailureInterface {
-  type: UserActionsTypes.SignUpFailure,
+  type: USER_ACTION_TYPES.SignUpFailure,
   payload: string
 }
 
 /* LOGIN ACTIONS INTERFACE */
 
 export interface LoginUserRequestInterface {
-  type: UserActionsTypes.InitiateLogin,
+  type: USER_ACTION_TYPES.InitiateLogin,
   payload: LoginFormValues
 }
 
 export interface LoginUserPendingInterface {
-  type: UserActionsTypes.LoginPending,
+  type: USER_ACTION_TYPES.LoginPending,
 }
 
 
 export interface LoginUserFailureInterface {
-  type: UserActionsTypes.LoginFailure,
+  type: USER_ACTION_TYPES.LoginFailure,
   payload: number
 }
 
 export interface AuthSuccessInterface {
-  type: UserActionsTypes.AuthSuccess,
+  type: USER_ACTION_TYPES.AuthSuccess,
   payload: UserData
 }
 
 /* CURRENT USER ACTIONS INTERFACE */
 
 export interface CheckCurrentUserInterface {
-  type: UserActionsTypes.CheckCurrentUser;
+  type: USER_ACTION_TYPES.CheckCurrentUser;
 }
 
 export interface CheckCurrentUserStartedInterface {
-  type: UserActionsTypes.CheckCurrentUserStarted;
+  type: USER_ACTION_TYPES.CheckCurrentUserStarted;
 }
 
 export interface CheckCurrentUserFailureInterface {
-  type: UserActionsTypes.CheckCurrentUserFailure;
+  type: USER_ACTION_TYPES.CheckCurrentUserFailure;
 }
 
 export type UserActions =

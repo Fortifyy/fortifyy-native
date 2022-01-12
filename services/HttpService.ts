@@ -35,7 +35,7 @@ class HttpService {
         case 401:
           //todo add keys of asyncStorage -> Expo Token for device Notifications
           await SecureStore.deleteItemAsync("jwt");
-          // this.unauthorizedCallback();
+          this.unauthorizedCallback();
           break;
         default:
           break;

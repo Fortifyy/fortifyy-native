@@ -66,7 +66,7 @@ const SignUpForm = () => {
     initialValues,
     onSubmit(values: SignUpFormValues): void | Promise<any> {
       let formValues: LoginFormValues = {
-        email: values.email,
+        email: values.email.toLowerCase(),
         password: values.password,
       };
       dispatch(createUserRequest(formValues));

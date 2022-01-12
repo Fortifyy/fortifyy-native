@@ -1,5 +1,5 @@
 import {call, fork, put, takeLatest} from "redux-saga/effects";
-import {UserActionsTypes} from "../../constants";
+import {USER_ACTION_TYPES} from "../../constants";
 import {CreateUserRequestInterface, LoginUserRequestInterface, UserData} from "../../interface/userDataInterface";
 import AuthService from "../../services/AuthService";
 import {LoginResponse, UnAuthorizedFailureResponse} from "../../interface/AuthService";
@@ -52,15 +52,15 @@ function* checkUser() {
 /* Watchers */
 
 function* watchLoginUserRequest() {
-  yield takeLatest(UserActionsTypes.InitiateLogin, loginUser);
+  yield takeLatest(USER_ACTION_TYPES.InitiateLogin, loginUser);
 }
 
 function* watchCreateUserRequest() {
-  yield takeLatest(UserActionsTypes.InitiateSignUp, createUser);
+  yield takeLatest(USER_ACTION_TYPES.InitiateSignUp, createUser);
 }
 
 function* watchCheckCurrentUserRequest() {
-  yield takeLatest(UserActionsTypes.CheckCurrentUser, checkUser);
+  yield takeLatest(USER_ACTION_TYPES.CheckCurrentUser, checkUser);
 }
 
 

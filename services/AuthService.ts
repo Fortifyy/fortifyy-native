@@ -20,8 +20,8 @@ class AuthService extends ApiService {
 
     if (token && user) {
       await this.setAuthorizationHeader();
-      this.api.setUnauthorizedCallback(this.destroySession.bind(this));
     }
+    this.api.setUnauthorizedCallback(this.destroySession.bind(this));
   };
 
   /*Helper Functions*/
@@ -58,6 +58,7 @@ class AuthService extends ApiService {
   };
 
   destroySession = async () => {
+    console.log("[[AuthService]] Session Data Destroyed");
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.UserToken); //todo add keys of asyncStorage -> Expo Token for device Notifications
     this.api.removeHeaders(["Authorization"]);
   };
@@ -69,7 +70,6 @@ class AuthService extends ApiService {
       await this.createSession({userId: res.data.user.id, token: res.data.token});
       return res;
     }).catch((error) => {
-      console.log("[[Auth Service]] - Login : Error", error.data);
       return error.data;
     });
   };
