@@ -98,7 +98,10 @@
     "todayActivities": "Today's Activities",
     "newActivity": "New Activity",
     "society": "My Society",
-    "manage": "Manage"
+    "manage": "Manage",
+    "community": "Community",
+    "activities": "Activities",
+    "myHome": "My Home"
   },
   "activity": {
     "new": {
@@ -110,6 +113,21 @@
       "selectSubType": "Select Type for Local Service",
       "localServicesId": "Choose Local Service",
       "create": "Create Activity"
+    },
+    "cardData": {
+      "delivery": {
+        "1_1": "Delivered to ",
+        "1_2": "Delivery to ",
+        "2_1": " more house",
+        "2_2": " more houses"
+      },
+      "approval": {
+        "allowed": "Allowed by ",
+        "reject": "Rejected by ",
+        "remove": "Removed by ",
+        "pending": "Approval Pending"
+      },
+      "wrongEntry": "Wrong Entry"
     }
   }
 }

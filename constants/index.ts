@@ -1,7 +1,12 @@
 export enum SCREEN_NAMES {
   Login = "Login",
   SignUp = "SignUp",
-  DummyPage = "DummyPage"
+  DummyPage = "DummyPage", //temp
+  Activity = "Activity",
+  MyHome = "My Home",
+  Community = "Community",
+  Profile = "Profile",
+  HomeTab = "HomeTab"
 }
 
 export enum UserActionsTypes {
@@ -22,3 +27,30 @@ export enum UserActionsTypes {
 export const SECURE_STORE_KEYS = {
   UserToken: "user-token",
 };
+
+export enum ACTIVITY_TYPES {
+  Cab = "Cab",
+  Delivery = "Delivery",
+  Guest = "Guest",
+  DailyHelp = "Daily-Help",
+  Vehicle = "Vehicle",
+  VisitingHelp = "Visiting-Help",
+  Parcel = "Parcel",
+  Others = "Others",
+}
+
+export enum ACTIVITY_STATUS {
+  Inside = "Inside",
+  Left = "Left",
+  Denied = "Denied",
+  Pending = "Pending",
+}
+
+export enum WORKER_TYPES {
+    Maid = 'Maid',
+    Milkman = 'Milkman',
+    Laundry = 'Laundry',
+    Tuition = 'Tuition',
+    CarCleaner = 'Car-Cleaner',
+    Driver = 'Driver',
+}
