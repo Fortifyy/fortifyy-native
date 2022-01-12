@@ -11,7 +11,8 @@ interface Props {
 }
 /*todo
 *  Text Colors
-*  Photos*/
+*  Photos
+*  Put Icons accordance to color values decided*/
 const ActivityCard: React.FC<Props> = ({cardData}) => {
   const [colorScheme, setColorScheme] = useState<IBadgeProps["colorScheme"]>(undefined);
   const [statusIcon, setStatusIcon] = useState("");
@@ -74,8 +75,9 @@ const ActivityCard: React.FC<Props> = ({cardData}) => {
       <VStack space="4" left={"4"} top={"5"}>
         {/* Header */}
         <HStack space={"4"}>
-          <Avatar backgroundColor="primary.500"
-                  source={{uri: `https://gravatar.com/avatar/${cardData._id}?d=retro`}}>AC</Avatar>
+          <Avatar backgroundColor="rose.500"
+            // source={{uri: cardData.type === ACTIVITY_TYPES.DailyHelp ? require(`../assets/icons/ActivityTypes/${ACTIVITY_TYPES.DailyHelp}.svg`) : require(`../assets/icons/ActivityTypes/${cardData.type}.svg`)}}>AC</Avatar>
+                  source={require(`../assets/icons/ActivityTypes/Cab.png`)}>AC</Avatar>
           <VStack space={"2xs"}>
             <Text ml={"1"} fontSize={"md"}>
               {cardData.type === ACTIVITY_TYPES.DailyHelp ? cardData.dailyHelp?.name : cardData.type}
