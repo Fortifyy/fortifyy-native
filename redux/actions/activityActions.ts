@@ -1,24 +1,35 @@
 import {
+  getMoreUserActivitiesSuccessInterface,
   getUserActivitiesFailureInterface,
+  getUserActivitiesFilterParams,
   getUserActivitiesInterface,
   getUserActivitiesPendingInterface,
   getUserActivitiesSuccessInterface,
+  setUserActivityFiltersInterface,
   UserActivityInterface,
 } from "../../interface/activityInterface";
-import {ACTIVITY_ACTION_TYPES} from "../../constants";
+import {ACTIVITY_ACTION_TYPES, ACTIVITY_TYPES} from "../../constants";
 
-export const getUserActivities = (): getUserActivitiesInterface => ({
+export const getUserActivities = (payload: getUserActivitiesFilterParams): getUserActivitiesInterface => ({
   type: ACTIVITY_ACTION_TYPES.GetUserActivities,
+  payload,
 });
 export const getUserActivitiesPending = (): getUserActivitiesPendingInterface => ({
   type: ACTIVITY_ACTION_TYPES.GetUserActivitiesPending,
 });
-//todo change any
-export const getUserActivitiesSuccess = (data: [UserActivityInterface] | [] = []): getUserActivitiesSuccessInterface => ({
+export const getUserActivitiesSuccess = (payload: [UserActivityInterface] | [] = []): getUserActivitiesSuccessInterface => ({
   type: ACTIVITY_ACTION_TYPES.GetUserActivitiesSuccess,
-  payload: data,
+  payload,
 });
-export const getUserActivitiesFailure = (data?: string | undefined): getUserActivitiesFailureInterface => ({
+export const getMoreUserActivitiesSuccess = (payload: [UserActivityInterface] | [] = []): getMoreUserActivitiesSuccessInterface => ({
+  type: ACTIVITY_ACTION_TYPES.GetMoreUserActivitiesSuccess,
+  payload,
+});
+export const getUserActivitiesFailure = (payload?: string | undefined): getUserActivitiesFailureInterface => ({
   type: ACTIVITY_ACTION_TYPES.GetUserActivitiesFailure,
-  payload: data,
+  payload,
+});
+export const setUserActivityFilters = (payload?: ACTIVITY_TYPES): setUserActivityFiltersInterface => ({
+  type: ACTIVITY_ACTION_TYPES.SetUserActivityFilters,
+  payload,
 });

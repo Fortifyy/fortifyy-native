@@ -28,7 +28,7 @@ const ActivityCard: React.FC<Props> = ({cardData}) => {
       case ACTIVITY_STATUS.Denied:
         setColorScheme("danger");
         setStatusIcon("ios-alert-circle-outline");
-        setTime(cardData.inTime);
+        cardData.inTime && setTime(new Date(cardData.inTime));
         setApproval({
           text: t("activity.cardData.approval.reject"),
           approvedBy: cardData.allowedBy && cardData.allowedBy[0]?.name,
@@ -37,7 +37,7 @@ const ActivityCard: React.FC<Props> = ({cardData}) => {
       case ACTIVITY_STATUS.Inside:
         setColorScheme("success");
         setStatusIcon("enter-outline");
-        setTime(cardData.inTime);
+        cardData.inTime && setTime(new Date(cardData.inTime));
         setApproval({
           text: t("activity.cardData.approval.allowed"),
           approvedBy: cardData.allowedBy && cardData.allowedBy[0]?.name,
@@ -54,7 +54,7 @@ const ActivityCard: React.FC<Props> = ({cardData}) => {
         break;
       case ACTIVITY_STATUS.Left:
         setStatusIcon("exit-outline");
-        setTime(cardData.outTime);
+        cardData.outTime && setTime(new Date(cardData.outTime));
         setApproval({
           approvedBy: cardData.allowedBy && cardData.allowedBy[0]?.name,
           text: t("activity.cardData.approval.allowed"),
@@ -89,7 +89,11 @@ const ActivityCard: React.FC<Props> = ({cardData}) => {
               </Badge>
               <Icon size={"xs"} as={Ionicons} name={statusIcon} />
               <Text fontSize={"xs"}>
-                {time && new Date(time).toLocaleTimeString("en-IN", {timeStyle: "short"})}
+                {/*If date is not today's then show date also*/}
+                {time && time.toLocaleString("en-IN", new Date().getDate() === time.getDate() ? {timeStyle: "short"} : {
+                  timeStyle: "short",
+                  dateStyle: "short",
+                })}
               </Text>
               {cardData.dailyHelp &&
                 <HStack alignItems={"center"} space={"xs"}>

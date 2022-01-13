@@ -2,21 +2,22 @@ import {call, fork, put, takeLatest} from "redux-saga/effects";
 import {ACTIVITY_ACTION_TYPES} from "../../constants";
 import * as ActivityActions from "../actions/activityActions";
 import ActivityService from "../../services/ActivityService";
-import {UserActivityInterface} from "../../interface/activityInterface";
+import {getUserActivitiesInterface, UserActivityInterface} from "../../interface/activityInterface";
 import {t} from "i18n-js";
 
 
-function* getUserActivities() {
+function* getUserActivities({payload}: getUserActivitiesInterface) {
   yield put(ActivityActions.getUserActivitiesPending());
   try {
-    const response: {data: [UserActivityInterface]; status: any} = yield call(ActivityService.getActivities);
+    const response: {data: [UserActivityInterface]; status: number} = yield call(ActivityService.getActivities, payload);
     switch (response.status) {
       case 401:
         // yield put() todo logout user
         yield put(ActivityActions.getUserActivitiesFailure());
         break;
       case 200:
-        yield put(ActivityActions.getUserActivitiesSuccess(response.data));
+        if (payload.date === 0) yield put(ActivityActions.getUserActivitiesSuccess(response.data));
+        else yield put(ActivityActions.getMoreUserActivitiesSuccess(response.data));
         break;
       default:
         yield put(ActivityActions.getUserActivitiesFailure(t("error.somethingWrong")));

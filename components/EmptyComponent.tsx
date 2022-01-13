@@ -1,16 +1,14 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
-import {Text} from "native-base";
+import {Center} from "native-base";
+import {PageNotFound} from "../assets/Svg";
+import {ViewProps} from "react-native";
 
-// todo Add 404 SVG and Styling
-const EmptyComponent = () => {
+const EmptyComponent: React.FC<ViewProps> = ({children, ...props}) => {
   return (
-    <View style={styles.container}>
-      <Text>Nothing Here</Text>
-    </View>
+    <Center testID={"Empty-Comp-Center"}>
+      <PageNotFound title="404" scaleY={.4} scaleX={.4} {...props} />
+      {children}
+    </Center>
   );
 };
-const styles = StyleSheet.create({
-  container: {},
-});
 export default EmptyComponent;

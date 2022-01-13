@@ -7,6 +7,6 @@ export const API_ROUTES = {
     CurrentUser: "auth/current-user",
   },
   activity: {
-    getAll: "activities/all",
+    userActivities: "activities/user-activities",
   },
 };

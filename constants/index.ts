@@ -29,6 +29,8 @@ export enum ACTIVITY_ACTION_TYPES {
   GetUserActivitiesPending = "GET_USER_ACTIVITIES_PENDING",
   GetUserActivitiesSuccess = "GET_USER_ACTIVITIES_SUCCESS",
   GetUserActivitiesFailure = "GET_USER_ACTIVITIES_FAILURE",
+  GetMoreUserActivitiesSuccess = "GET_MORE_USER_ACTIVITIES_SUCCESS",
+  SetUserActivityFilters="setUserActivityFilters"
 }
 
 export const SECURE_STORE_KEYS = {

@@ -6,7 +6,10 @@
     "send": "Send",
     "cancel": "Cancel",
     "loading": "Loading",
-    "select": "Select One"
+    "select": "Select One",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "yesterdays": "Yesterday's"
   },
   "auth": {
     "signUp": "Sign up",
@@ -129,6 +132,8 @@
         "pending": "Approval Pending"
       },
       "wrongEntry": "Wrong Entry"
-    }
+    },
+    "notFoundHeading": "No Activities for Applied Filters",
+    "paginateText": "Get $DAY$ Activities?"
   }
 }

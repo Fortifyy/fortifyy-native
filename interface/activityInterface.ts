@@ -32,11 +32,17 @@ export interface UserActivityInterface {
 export interface ActivityState {
   activities: [UserActivityInterface] | any[],
   loading: boolean,
-  error: string | undefined
+  error: string | undefined,
+  filters: ACTIVITY_TYPES | undefined
+}
+
+export interface getUserActivitiesFilterParams extends Partial<UserActivityInterface> {
+  date: number;
 }
 
 export interface getUserActivitiesInterface {
   type: ACTIVITY_ACTION_TYPES.GetUserActivities;
+  payload: getUserActivitiesFilterParams;
 }
 
 export interface getUserActivitiesPendingInterface {
@@ -49,12 +55,24 @@ export interface getUserActivitiesSuccessInterface {
   payload: [UserActivityInterface] | [];
 }
 
+export interface getMoreUserActivitiesSuccessInterface {
+  type: ACTIVITY_ACTION_TYPES.GetMoreUserActivitiesSuccess;
+  payload: [UserActivityInterface] | [];
+}
+
 export interface getUserActivitiesFailureInterface {
   type: ACTIVITY_ACTION_TYPES.GetUserActivitiesFailure;
   payload: string | undefined;
+}
+
+export interface setUserActivityFiltersInterface {
+  type: ACTIVITY_ACTION_TYPES.SetUserActivityFilters;
+  payload: ACTIVITY_TYPES | undefined;
 }
 
 export type ActivityActions =
   | getUserActivitiesPendingInterface
   | getUserActivitiesSuccessInterface
   | getUserActivitiesFailureInterface
+  | getMoreUserActivitiesSuccessInterface
+  | setUserActivityFiltersInterface
