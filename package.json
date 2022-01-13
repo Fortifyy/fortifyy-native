@@ -17,8 +17,6 @@
     "@react-navigation/material-bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
-    "@types/react-redux": "^7.1.21",
-    "@types/redux-saga": "^0.10.5",
     "axios": "^0.24.0",
     "expo": "~44.0.0",
     "expo-app-loading": "~1.3.0",
@@ -46,15 +44,18 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/react-redux": "^7.1.21",
     "@babel/core": "^7.12.9",
-    "@types/axios": "^0.14.0",
     "@types/i18n-js": "^3.8.2",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
     "@types/redux-logger": "^3.0.9",
-    "react-devtools": "^4.22.1",
+    "react-devtools": "4.14.0",
     "redux-logger": "^3.0.6",
     "typescript": "~4.3.5"
+  },
+  "resolutions": {
+    "react-devtools-core": "4.14.0"
   },
   "private": true
 }

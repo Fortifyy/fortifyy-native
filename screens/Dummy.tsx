@@ -1,9 +1,10 @@
 import React, {useCallback} from "react";
-import {StyleSheet, View,Text} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {Button, StatusBar} from "native-base";
 import {useDispatch} from "react-redux";
 import {checkCurrentUser} from "../redux/actions/userActions";
 import AuthService from "../services/AuthService";
+import authService from "../services/AuthService";
 import {RootStackParamList} from "../interface/navigation";
 import {SCREEN_NAMES} from "../constants";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
@@ -24,16 +25,22 @@ const Dummy: React.FC<Props> = ({navigation}) => {
     });
   }, []);
 
+  const SomethingMore = async () => {
+    const token = await authService.getToken();
+    console.log("Token haai?", token);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={"dark-content"} />
-      <Text style={{fontFamily:"monospace"}}>Hello</Text>
+      <Text style={{fontFamily: "monospace"}}>Hello</Text>
       <Button onPress={Something}>Click me</Button>
       <View style={{margin: 10}} />
       <Button onPress={SomethingElse}>Destroy me</Button>
       <Button onPress={() => navigation.navigate(SCREEN_NAMES.HomeTab, {
         screen: "Community",
       })}>Go to Community</Button>
+      <Button onPress={SomethingMore}>One More</Button>
     </View>
   );
 };

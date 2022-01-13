@@ -17,3 +17,4 @@ web-build/
 yarn.lock
 yarn-error.log
 /exclude/
+/react-native-debugger.exe - Shortcut.lnk

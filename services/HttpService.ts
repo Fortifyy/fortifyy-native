@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosResponse} from "axios";
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import {BASE_URL} from "../constants/api";
 import * as SecureStore from "expo-secure-store";
 
@@ -40,7 +40,6 @@ class HttpService {
         default:
           break;
       }
-
       return Promise.reject(error.response);
     } catch (e) {
       return Promise.reject(error);
@@ -52,8 +51,9 @@ class HttpService {
   }
 }
 
-const options = {
+const options: AxiosRequestConfig = {
   baseURL: BASE_URL,
+  timeout: 5000,
 };
 const httpService = new HttpService(options);
 
