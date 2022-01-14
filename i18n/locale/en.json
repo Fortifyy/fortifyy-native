@@ -5,6 +5,7 @@
     "success": "success",
     "send": "Send",
     "cancel": "Cancel",
+    "add": "Add",
     "loading": "Loading",
     "select": "Select One",
     "today": "Today",
@@ -135,5 +136,10 @@
     },
     "notFoundHeading": "No Activities for Applied Filters",
     "paginateText": "Get $DAY$ Activities?"
+  },
+  "myHome": {
+    "shareAdder": "Share My Address",
+    "family": "My Family",
+    "daily-help": "My Daily Help"
   }
 }
