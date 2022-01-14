@@ -141,5 +141,20 @@
     "shareAdder": "Share My Address",
     "family": "My Family",
     "daily-help": "My Daily Help"
+  },
+  "community": {
+    "title": "Discover",
+    "residents": {
+      "heading": "Residents"
+    },
+    "daily-Help": {
+      "heading": "Daily Help"
+    },
+    "emergency": {
+      "heading": "Emergency No's"
+    },
+    "notices": {
+      "heading": "Notice Board"
+    }
   }
 }
