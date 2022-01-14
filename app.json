@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "fortifyy-native",
+    "name": "Fortifyy",
     "slug": "fortifyy-native",
-    "version": "1.0.0",
+    "version": "1.0.0-alpha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,6 +27,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }

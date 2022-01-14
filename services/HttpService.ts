@@ -1,5 +1,4 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
-import {BASE_URL} from "../constants/api";
 import * as SecureStore from "expo-secure-store";
 
 class HttpService {
@@ -52,7 +51,7 @@ class HttpService {
 }
 
 const options: AxiosRequestConfig = {
-  baseURL: BASE_URL,
+  baseURL: __DEV__ ? "http://192.168.0.109:5000/api/" : process.env.API_URL,
   timeout: 5000,
 };
 const httpService = new HttpService(options);
