@@ -1,7 +1,8 @@
 import ApiService from "./ApiService";
-import {API_ROUTES} from "../constants/api";
 import {sanitizeUserActivityPayload} from "../functions/sanitizePayload";
 import {getUserActivitiesFilterParams, UserActivityInterface} from "../interface/activityInterface";
+
+const ENDPOINTS = {getUserActivities: "activities/user-activities"};
 
 class ActivityService extends ApiService {
   constructor() {
@@ -10,7 +11,7 @@ class ActivityService extends ApiService {
 
   getActivities = (params?: getUserActivitiesFilterParams): Promise<{data?: [UserActivityInterface]; status: number}> => {
     return this.apiClient
-      .get(API_ROUTES.activity.userActivities, {params})
+      .get(ENDPOINTS.getUserActivities, {params})
       .then((res) => {
           return {
             data: sanitizeUserActivityPayload(res.data),

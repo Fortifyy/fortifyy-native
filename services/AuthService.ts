@@ -1,11 +1,15 @@
 import ApiService from "./ApiService";
 import * as SecureStore from "expo-secure-store";
 import {SECURE_STORE_KEYS} from "../constants";
-import {API_ROUTES} from "../constants/api";
 import {LoginFormValues} from "../interface/userDataInterface";
 import {LoginFailureResponse, LoginSuccessResponse} from "../interface/AuthService";
 import {AxiosResponse} from "axios";
 
+const ENDPOINTS = {
+  SignUpWithEmail: "auth/signup/with-email",
+  LoginWithEmail: "auth/signin/with-email",
+  CurrentUser: "auth/current-user",
+};
 
 class AuthService extends ApiService {
   /*Constructor and Init*/
@@ -14,7 +18,7 @@ class AuthService extends ApiService {
     this.init().then(() => console.log("Auth Service Initialized"));
   }
 
-  init = async () => {
+  private init = async () => {
     const token = await this.getToken();
     const user = await this.getUser();
 
@@ -26,17 +30,17 @@ class AuthService extends ApiService {
 
   /*Helper Functions*/
 
-  getToken = async (): Promise<string | undefined> => {
+  private getToken = async (): Promise<string | undefined> => {
     const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
     return user ? JSON.parse(user).token : undefined;
   };
 
-  getUser = async () => {
+  private getUser = async () => {
     const user = await SecureStore.getItemAsync(SECURE_STORE_KEYS.UserToken);
     return user ? JSON.parse(user) : undefined;
   };
 
-  setAuthorizationHeader = async () => {
+  private setAuthorizationHeader = async () => {
     const token = await this.getToken();
     if (token) {
       this.api.attachHeaders({
@@ -45,7 +49,7 @@ class AuthService extends ApiService {
     }
   };
 
-  createSession = async (user: any) => {
+  private createSession = async (user: any) => {
     await SecureStore.setItemAsync(SECURE_STORE_KEYS.UserToken, JSON.stringify(user));
     await this.setAuthorizationHeader();
     //todo Notification Service
@@ -57,7 +61,7 @@ class AuthService extends ApiService {
     // }
   };
 
-  destroySession = async () => {
+  private destroySession = async () => {
     console.log("[[AuthService]] Session Data Destroyed");
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.UserToken); //todo add keys of asyncStorage -> Expo Token for device Notifications
     this.api.removeHeaders(["Authorization"]);
@@ -66,7 +70,7 @@ class AuthService extends ApiService {
   /* API Handlers */
 
   login = (loginData: LoginFormValues): Promise<AxiosResponse<LoginSuccessResponse | LoginFailureResponse>> => {
-    return this.apiClient.post(API_ROUTES.auth.LoginWithEmail, loginData).then(async (res) => {
+    return this.apiClient.post(ENDPOINTS.LoginWithEmail, loginData).then(async (res) => {
       await this.createSession({userId: res.data.user.id, token: res.data.token});
       return res;
     }).catch((error) => {
@@ -80,7 +84,7 @@ class AuthService extends ApiService {
   };
 
   currentUser = () => {
-    return this.apiClient.get(API_ROUTES.auth.CurrentUser)
+    return this.apiClient.get(ENDPOINTS.CurrentUser)
       .then((res) => {
         return {
           id: res.data.userId,
@@ -94,7 +98,7 @@ class AuthService extends ApiService {
   };
 
   signup = (signupData: LoginFormValues) => {
-    return this.apiClient.post(API_ROUTES.auth.SignUpWithEmail, signupData)
+    return this.apiClient.post(ENDPOINTS.SignUpWithEmail, signupData)
       .then(() => {
         return this.login(signupData);
       })

@@ -51,7 +51,7 @@ class HttpService {
 }
 
 const options: AxiosRequestConfig = {
-  baseURL: __DEV__ ? "http://192.168.0.109:5000/api/" : process.env.API_URL,
+  baseURL: __DEV__ ? "http://192.168.0.109:5000/api/v1/" : process.env.API_URL,
   timeout: 5000,
 };
 const httpService = new HttpService(options);

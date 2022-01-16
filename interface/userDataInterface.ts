@@ -24,6 +24,20 @@ export interface UserState {
   },
 }
 
+export interface UserProfileData {
+  email: string;
+  flat: string;
+  id: string;
+  image: {
+    data: Buffer,
+    type: string
+  };
+  mobileNum: number;
+  name: string;
+  userType: string;
+  ownershipType: string;
+}
+
 /* Signup Action Interface */
 
 export interface CreateUserRequestInterface {
