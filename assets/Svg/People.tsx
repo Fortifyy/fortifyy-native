@@ -3,7 +3,6 @@ import Svg, {SvgProps, Path} from "react-native-svg";
 
 const SvgPeople = (props: SvgProps) => (
   <Svg
-    xmlns="http://www.w3.org/2000/svg"
     width={682.667}
     height={682.667}
     viewBox="0 0 512 512"

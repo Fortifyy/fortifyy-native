@@ -1,9 +1,8 @@
 // noinspection DuplicatedCode
 
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useState} from "react";
 import {
   Button,
-  Checkbox,
   Divider,
   FormControl,
   Hidden,
@@ -26,11 +25,9 @@ import {signUpValidationRules} from "../validators/auth";
 import $t from "../i18n";
 import {Entypo} from "@expo/vector-icons";
 import {useFocusEffect, useNavigation} from "@react-navigation/native";
-import {useDispatch, useSelector} from "react-redux";
-import {getErrorSelector, getPendingSelector} from "../redux/selectors/userSelector";
-import {createUserRequest} from "../redux/actions/userActions";
 import {t} from "i18n-js";
 import {LoginFormValues} from "../interface/userDataInterface";
+import authService from "../services/AuthService";
 
 // Shape of form values
 interface SignUpFormValues {
@@ -53,40 +50,49 @@ const initialTouched = {
 
 const SignUpForm = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, SCREEN_NAMES.SignUp>>();
-  const dispatch = useDispatch();
   const toast = useToast();
-  const error = useSelector(getErrorSelector);
-  const pending = useSelector(getPendingSelector);
+  const [pending, setPending] = useState(false);
   const [showPass, setShowPass] = React.useState(false);
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
+
+  const onSubmit = async (values: SignUpFormValues) => {
+    let formValues: LoginFormValues = {
+      email: values.email.toLowerCase().trim(),
+      password: values.password.trim(),
+    };
+    setPending(true);
+    const response = await authService.signup(formValues);
+    if (response.status >= 400) {
+      toast.show({
+        title: response.data,
+        status: "error",
+      });
+    } else {
+      toast.show({
+        status: "success",
+        title: "Thanks for signing up with us.",
+        duration: 500,
+      });
+      setPending(false);
+      navigation.navigate(SCREEN_NAMES.CreateProfile, {
+        ...formValues, // @ts-ignore
+        userId: response.data.id,
+      });
+    }
+  };
 
   const formik = useFormik({
     initialErrors: undefined,
     initialTouched,
     initialValues,
-    onSubmit(values: SignUpFormValues): void | Promise<any> {
-      let formValues: LoginFormValues = {
-        email: values.email.toLowerCase(),
-        password: values.password,
-      };
-      dispatch(createUserRequest(formValues));
-
-    },
+    onSubmit,
     validationSchema: signUpValidationRules,
   });
-  /*Server Side Error Handling*/
-  useEffect(() => {
-    if (error.signup) {
-      toast.show({
-        title: error.signup,
-        status: "error",
-      });
-    }
-  }, [error.signup]);
 
   useFocusEffect(useCallback(() => {
     return () => {
       formik.handleReset(initialValues);
+      setPending(false);
     };
   }, []));
 
@@ -223,59 +229,6 @@ const SignUpForm = () => {
                   </FormControl.ErrorMessage>
                 </FormControl>
               </VStack>
-              <Checkbox
-                alignItems="flex-start"
-                defaultIsChecked
-                value="demo"
-                colorScheme="primary"
-                accessibilityLabel="Remember me"
-              >
-                <HStack alignItems="center">
-                  <Text fontSize="sm" color="coolGray.400" pl="2">
-                    I accept the{" "}
-                  </Text>
-                  <Link
-                    _text={{
-                      fontSize: "sm",
-                      fontWeight: "semibold",
-                      textDecoration: "none",
-                    }}
-                    _light={{
-                      _text: {
-                        color: "primary.900",
-                      },
-                    }}
-                    _dark={{
-                      _text: {
-                        color: "primary.500",
-                      },
-                    }}
-                  >
-                    Terms of Use
-                  </Link>
-                  <Text fontSize="sm"> & </Text>
-
-                  <Link
-                    _text={{
-                      fontSize: "sm",
-                      fontWeight: "semibold",
-                      textDecoration: "none",
-                    }}
-                    _light={{
-                      _text: {
-                        color: "primary.900",
-                      },
-                    }}
-                    _dark={{
-                      _text: {
-                        color: "primary.500",
-                      },
-                    }}
-                  >
-                    Privacy Policy
-                  </Link>
-                </HStack>
-              </Checkbox>
               <Button
                 size="md"
                 borderRadius="4"
@@ -289,11 +242,11 @@ const SignUpForm = () => {
                 _dark={{
                   bg: "primary.700",
                 }}
-                isLoading={pending.signup}
+                isLoading={pending}
                 isLoadingText={t("auth.verifying")}
                 onPress={() => formik.handleSubmit()}
               >
-                SIGN UP
+                {t("common.continue")}
               </Button>
               <HStack
                 space="2"

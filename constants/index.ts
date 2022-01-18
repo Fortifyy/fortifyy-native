@@ -1,6 +1,7 @@
 export enum SCREEN_NAMES {
   Login = "Login",
   SignUp = "SignUp",
+  CreateProfile = "CreateProfile",
   DummyPage = "DummyPage", //temp
   Activity = "Activity",
   MyHome = "My Home",
@@ -30,7 +31,7 @@ export enum ACTIVITY_ACTION_TYPES {
   GetUserActivitiesSuccess = "GET_USER_ACTIVITIES_SUCCESS",
   GetUserActivitiesFailure = "GET_USER_ACTIVITIES_FAILURE",
   GetMoreUserActivitiesSuccess = "GET_MORE_USER_ACTIVITIES_SUCCESS",
-  SetUserActivityFilters="setUserActivityFilters"
+  SetUserActivityFilters = "setUserActivityFilters"
 }
 
 export const SECURE_STORE_KEYS = {
@@ -62,4 +63,9 @@ export enum WORKER_TYPES {
   Tuition = "Tuition",
   CarCleaner = "Car-Cleaner",
   Driver = "Driver",
+}
+
+export enum OWNERSHIP_TYPES {
+    Owner = 'Owner',
+    Tenant = 'Tenant',
 }

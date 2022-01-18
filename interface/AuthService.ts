@@ -20,6 +20,11 @@ export interface UnAuthorizedFailureResponse {
   statusCode: 401
 }
 
+export interface SignUpResponse {
+  data: string | object,
+  status: number
+}
+
 export type LoginResponse =
   | LoginSuccessResponse
   | LoginFailureResponse

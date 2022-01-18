@@ -10,10 +10,10 @@ export default ({config}: ConfigContext): ExpoConfig => <ExpoConfig>({
     test2: "hello",
   },
   android: {
-    package: "com.expo.sanchitb23.fortifyy-native",
+    package: "com.expo.sanchitb23.fortifyy",
   },
   ios: {
-    bundleIdentifier: "com.expo.sanchitb23.fortifyy-native",
+    bundleIdentifier: "com.expo.sanchitb23.fortifyy",
   },
   hooks: {
     postPublish: [

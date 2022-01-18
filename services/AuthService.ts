@@ -2,13 +2,14 @@ import ApiService from "./ApiService";
 import * as SecureStore from "expo-secure-store";
 import {SECURE_STORE_KEYS} from "../constants";
 import {LoginFormValues} from "../interface/userDataInterface";
-import {LoginFailureResponse, LoginSuccessResponse} from "../interface/AuthService";
+import {LoginFailureResponse, LoginSuccessResponse, SignUpResponse} from "../interface/AuthService";
 import {AxiosResponse} from "axios";
 
 const ENDPOINTS = {
   SignUpWithEmail: "auth/signup/with-email",
   LoginWithEmail: "auth/signin/with-email",
   CurrentUser: "auth/current-user",
+  CreateProfile: "auth/create-profile",
 };
 
 class AuthService extends ApiService {
@@ -18,7 +19,7 @@ class AuthService extends ApiService {
     this.init().then(() => console.log("Auth Service Initialized"));
   }
 
-  private init = async () => {
+  init = async () => {
     const token = await this.getToken();
     const user = await this.getUser();
 
@@ -97,15 +98,41 @@ class AuthService extends ApiService {
       });
   };
 
-  signup = (signupData: LoginFormValues) => {
-    return this.apiClient.post(ENDPOINTS.SignUpWithEmail, signupData)
-      .then(() => {
-        return this.login(signupData);
-      })
-      .catch((reason) => {
-        return reason.data;
-      });
+  signup = async (signupData: LoginFormValues): Promise<SignUpResponse> => {
+    try {
+      const res = await this.apiClient.post(ENDPOINTS.SignUpWithEmail, signupData);
+      return {
+        data: res.data, //@ts-ignore
+        status: res.statusCode,
+      };
+    } catch (reason) {
+      return {
+        data: reason.data.message,
+        status: reason.data.statusCode,
+      };
+    }
   };
+
+  createProfile = async (formData: FormData) => {
+    try {
+      const res = await this.apiClient.put(ENDPOINTS.CreateProfile, formData, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return {
+        data: res.data, //@ts-ignore
+        status: res.statusCode,
+      };
+    } catch (reason) {
+      return {
+        data: reason.data.message,
+        status: reason.data.statusCode,
+      };
+    }
+  };
+
   /*  forgotPassword = data => this.apiClient.post(api.auth.FORGOT_PASSWORD, data);
 
     resetPassword = data => this.apiClient.post(api.auth.RESET_PASSWORD, data);*/

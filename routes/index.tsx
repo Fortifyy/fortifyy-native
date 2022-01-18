@@ -14,6 +14,7 @@ import AppLoading from "expo-app-loading";
 import {checkCurrentUser, checkCurrentUserStarted} from "../redux/actions/userActions";
 import AuthService from "../services/AuthService";
 import HomeNavigator from "./Home";
+import CreateProfile from "../screens/auth/CreateProfile";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,6 +46,9 @@ function App() {
             <Stack.Group>
               <Stack.Screen name={SCREEN_NAMES.Login} component={Login} options={{headerShown: false}} />
               <Stack.Screen name={SCREEN_NAMES.SignUp} component={SignUp} options={{headerShown: false}} />
+              <Stack.Screen name={SCREEN_NAMES.CreateProfile}
+                            component={CreateProfile}
+                            options={{headerShown: false}} />
             </Stack.Group>
           }
         </Stack.Navigator>

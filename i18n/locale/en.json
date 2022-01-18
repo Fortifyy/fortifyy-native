@@ -6,16 +6,19 @@
     "send": "Send",
     "cancel": "Cancel",
     "add": "Add",
+    "continue": "Continue",
     "loading": "Loading",
     "select": "Select One",
     "today": "Today",
     "yesterday": "Yesterday",
-    "yesterdays": "Yesterday's"
+    "yesterdays": "Yesterday's",
+    "gallery": "Gallery",
+    "camera": "Camera"
   },
   "auth": {
     "signUp": "Sign up",
     "signIn": "Sign in",
-    "enterName": "Enter your name",
+    "enterName": "Enter Name",
     "enterEmail": "Email",
     "enterPassword": "Password",
     "confirmPassword": "Confirm your password",
@@ -36,8 +39,11 @@
     "createNewAccount": "Don't have an Account? Sign up",
     "enterPhoneNum": "Enter your Mobile Number",
     "selectSociety": "Select your Society",
+    "enterFlat": "Enter Flat Number",
     "verifying": "Verifying",
-    "RememberMe": "Remember me and keep me logged in"
+    "RememberMe": "Remember me and keep me logged in",
+    "createProfile": "Create Profile",
+    "chooseOwnership": "Ownership Type"
   },
   "validation": {
     "nameIsRequired": "Name is required.",
@@ -45,6 +51,8 @@
     "passwordIsRequired": "Password is required.",
     "phoneNumIsRequired": "Mobile Number is required.",
     "societyIsRequired": "Society Name is required.",
+    "flatIsRequired": "Flat Number is Required",
+    "flatIsInvalid": "Enter Valid Flat Number",
     "confirmPasswordIsRequired": "Confirm password is required.",
     "currentPasswordIsRequired": "Current password is required.",
     "newPasswordIsRequired": "New password is required.",
@@ -57,6 +65,7 @@
     "newPasswordMinCharacters": "New password must be at least 6 characters.",
     "newPasswordConfirmationMinCharacters": "New password confirmation must be at least 8 characters.",
     "mustBeValidPhoneNumber": "Enter Valid Mobile Number",
+    "invalidOwnership": "Invalid Ownership Option",
     "activity": {
       "typeRequired": "Type is required",
       "typeInvalid": "Select a valid Type",
@@ -74,7 +83,13 @@
     "socialLoginError": "Social login error",
     "close": "Close",
     "serverError": "Internal Server Error",
-    "unauthorized": "Authorization Error"
+    "unauthorized": "Authorization Error",
+    "permissions": {
+      "mediaTitle": "Refused Media Permission",
+      "mediaDescription": "Permission to access Media Library is required!",
+      "cameraTitle": "Refused Camera Permission",
+      "cameraDescription": "Permission to access camera roll is required!"
+    }
   },
   "profile": {
     "changePassword": {

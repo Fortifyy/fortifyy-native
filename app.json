@@ -29,7 +29,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "sentry-expo"
+      "sentry-expo",
+      "expo-image-picker"
     ]
   }
 }

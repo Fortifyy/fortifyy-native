@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Heading, HStack, Image, Pressable, Text, VStack} from "native-base";
+import {Box, Button, Heading, HStack, Image, Pressable, Text, VStack} from "native-base";
 import {MaterialBottomTabScreenProps} from "@react-navigation/material-bottom-tabs";
 import {HomeTabParamList, RootStackParamList} from "../../interface/navigation";
 import {SCREEN_NAMES} from "../../constants";
@@ -15,7 +15,7 @@ interface Props extends CompositeScreenProps<MaterialBottomTabScreenProps<HomeTa
 
 const {width} = Dimensions.get("window");
 
-const Community: React.FC<Props> = () => {
+const Community: React.FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView>
       <Box mx={2}>
@@ -54,6 +54,7 @@ const Community: React.FC<Props> = () => {
             </Pressable>
           </HStack>
         </VStack>
+        <Button onPress={() => navigation.navigate(SCREEN_NAMES.DummyPage)}>To Dummy</Button>
       </Box>
     </SafeAreaView>
   );

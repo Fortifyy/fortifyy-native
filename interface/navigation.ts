@@ -3,6 +3,11 @@ import {NavigatorScreenParams} from "@react-navigation/native";
 export type RootStackParamList = {
   Login: undefined,
   SignUp: undefined,
+  CreateProfile: {
+    email: string,
+    password: string,
+    userId: string
+  },
   DummyPage: undefined,
   HomeTab: NavigatorScreenParams<HomeTabParamList>
 }
