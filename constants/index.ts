@@ -12,9 +12,6 @@ export enum SCREEN_NAMES {
 
 export enum USER_ACTION_TYPES {
   GetCurrentUser = "GET_CURRENT_USER",
-  InitiateSignUp = "INITIATE_USER_SIGNUP",
-  SignupPending = "SIGNUP_PENDING",
-  SignUpFailure = "USER_SignUp_FAILURE",
   InitiateLogin = "INITIATE_USER_LOGIN",
   LoginPending = "LOGIN_PENDING",
   LoginFailure = "USER_LOGIN_FAILURE",

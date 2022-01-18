@@ -33,8 +33,9 @@ import {t} from "i18n-js";
 import {AntDesign, Entypo, Ionicons, MaterialIcons} from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import authService from "../services/AuthService";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginUserRequest} from "../redux/actions/userActions";
+import {getPendingSelector} from "../redux/selectors/userSelector";
 
 declare global {
   interface FormDataValue {
@@ -75,9 +76,9 @@ const initialTouched = {
 const CreateProfileForm = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, SCREEN_NAMES.CreateProfile>>();
   const route = useRoute<RouteProp<RootStackParamList, SCREEN_NAMES.CreateProfile>>();
-
   const toast = useToast();
   const dispatch = useDispatch();
+  const {login} = useSelector(getPendingSelector);
   const [pending, setPending] = useState(false);
   const {isOpen, onOpen, onClose} = useDisclose();
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
@@ -412,7 +413,7 @@ const CreateProfileForm = () => {
                 _dark={{
                   bg: "primary.700",
                 }}
-                isLoading={pending}
+                isLoading={pending || login}
                 isLoadingText={t("auth.verifying")}
                 onPress={() => formik.handleSubmit()}
               >

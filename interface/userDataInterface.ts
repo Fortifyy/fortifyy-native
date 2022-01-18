@@ -14,13 +14,11 @@ export interface UserData {
 export interface UserState {
   pending: {
     login: boolean,
-    signup: boolean,
     currentUser: boolean
   },
   user: UserData | undefined,
   error: {
     login: number | null,
-    signup: string | null
   },
 }
 
@@ -36,22 +34,6 @@ export interface UserProfileData {
   name: string;
   userType: string;
   ownershipType: string;
-}
-
-/* Signup Action Interface */
-
-export interface CreateUserRequestInterface {
-  type: USER_ACTION_TYPES.InitiateSignUp,
-  payload: LoginFormValues
-}
-
-export interface CreateUserPendingInterface {
-  type: USER_ACTION_TYPES.SignupPending,
-}
-
-export interface CreateSignUpFailureInterface {
-  type: USER_ACTION_TYPES.SignUpFailure,
-  payload: string
 }
 
 /* LOGIN ACTIONS INTERFACE */
@@ -91,10 +73,7 @@ export interface CheckCurrentUserFailureInterface {
 }
 
 export type UserActions =
-//Signup
-  | CreateUserPendingInterface
-  | CreateSignUpFailureInterface
-  //Login
+//Login
   | LoginUserFailureInterface
   | LoginUserPendingInterface
   //CurrentUser

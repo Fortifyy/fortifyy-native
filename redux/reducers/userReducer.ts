@@ -5,35 +5,16 @@ import {Reducer} from "redux";
 const initialState = {
   pending: {
     login: false,
-    signup: false,
     currentUser: false,
   },
   user: undefined,
   error: {
     login: null,
-    signup: null,
   },
 };
 
 const userReducer: Reducer<UserState, UserActions> = (state = initialState, action) => {
   switch (action.type) {
-    /* Signup Reducers */
-    case USER_ACTION_TYPES.SignupPending:
-      return {
-        ...initialState,
-        pending: {
-          ...initialState.pending,
-          signup: true,
-        },
-      };
-    case USER_ACTION_TYPES.SignUpFailure:
-      return {
-        ...initialState,
-        error: {
-          ...initialState.error,
-          signup: action.payload,
-        },
-      };
     /* Login Reducers */
     case USER_ACTION_TYPES.LoginPending:
       return {
